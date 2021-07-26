@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Karoline
+Build-Jdk: 16.0.1
+Implementation-Title: marvel-comics
+Implementation-Version: 1.0.0
+Implementation-Vendor-Id: br.com.marvel
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/marvel-comics/
+Created-By: Maven Integration for Eclipse
+

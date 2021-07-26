@@ -1,0 +1,672 @@
+swagger: "2.0"
+info:
+  description: "Project created based on API marvel comics https://developer.marvel.com/"
+  version: "1.0.0"
+  title: "DEXTRA CHALLENGE BACK-END API"
+  contact:
+    email: "kvianavieira@hotmail.com.com"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+- name: "characters"
+  description: "Everything about Marvel"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+
+schemes:
+- "https"
+- "http"
+paths:
+  /characters:
+    get:
+      tags:
+      - characters
+      summary: Retrieve all Characters.
+      description: ""
+      operationId: searchCharacter
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: OK 
+          schema:
+            $ref: '#/definitions/Results'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description:  Internal Server Error.
+        "404":
+          description: Not Found.
+        "405":
+          description: Method Not Allowed.
+        "408":
+          description: Request Timeout
+          
+  /characters/{characterId}:
+     get:
+      tags:
+      - characters
+      summary: Retrieve all Characters by ID.
+      parameters:
+      - name: "characterId"
+        in: path
+        type: "integer"
+        format: "int64"
+        required: true
+      description: "Numeric ID of the user to get"
+      operationId: searchCharacterById
+      responses:
+        "200":
+          description: OK 
+          schema:
+              $ref: '#/definitions/Results'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description:  Internal Server Error.
+        "404":
+          description: Not Found.
+        "405":
+          description: Method Not Allowed.
+        "408":
+          description: Request Timeout
+          
+  /characters/{characterId}/comics:
+     get:
+      tags:
+      - characters
+      summary: Retrieve all comics of a specific character by his ID.
+      parameters:
+      - name: "characterId"
+        in: path
+        type: "integer"
+        format: "int64"
+        required: true
+      description: "Numeric ID of the user to get"
+      operationId: searchComicsByCharacterId
+      responses:
+        "200":
+          description: OK 
+          schema:
+              $ref: '#/definitions/ResultsComicsByCharacterId'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description:  Internal Server Error.
+        "404":
+          description: Not Found.
+        "405":
+          description: Method Not Allowed.
+        "408":
+          description: Request Timeout
+          
+  /characters/{characterId}/events:
+     get:
+      tags:
+      - characters
+      summary: Retrieve all events of a specific character by his ID.
+      parameters:
+      - name: "characterId"
+        in: path
+        type: "integer"
+        format: "int64"
+        required: true
+      description: "Numeric ID of the user to get"
+      operationId: searchEventsByCharacterId
+      responses:
+        "200":
+          description: OK 
+          schema:
+              $ref: '#/definitions/ResultsEventsByCharacterId'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description:  Internal Server Error.
+        "404":
+          description: Not Found.
+        "405":
+          description: Method Not Allowed.
+        "408":
+          description: Request Timeout
+          
+  /characters/{characterId}/series:
+     get:
+      tags:
+      - characters
+      summary: Retrieve all series of a specific character by his ID.
+      parameters:
+      - name: "characterId"
+        in: path
+        type: "integer"
+        format: "int64"
+        required: true
+      description: "Numeric ID of the user to get"
+      operationId: searchSeriesByCharacterId
+      responses:
+        "200":
+          description: OK 
+          schema:
+              $ref: '#/definitions/ResultsSeriesByCharacterId'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description:  Internal Server Error.
+        "404":
+          description: Not Found.
+        "405":
+          description: Method Not Allowed.
+        "408":
+          description: Request Timeout
+          
+  /characters/{characterId}/stories:
+     get:
+      tags:
+      - characters
+      summary: Retrieve all stories of a specific character by his ID.
+      parameters:
+      - name: "characterId"
+        in: path
+        type: "integer"
+        format: "int64"
+        required: true
+      description: "Numeric ID of the user to get"
+      operationId: searchStoriesByCharacterId
+      responses:
+        "200":
+          description: OK 
+          schema:
+              $ref: '#/definitions/ResultsStoriesByCharacterId'
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "500":
+          description:  Internal Server Error.
+        "404":
+          description: Not Found.
+        "405":
+          description: Method Not Allowed.
+        "408":
+          description: Request Timeout
+  
+definitions:
+
+  Results:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/CharacterResponse'
+  CharacterResponse:
+    type: "object"
+    properties:
+      id: 
+        type: integer
+        format: int64
+        example: 1011334
+      name: 
+        type: string
+        example: "3-D Man"
+      description: 
+        type: string
+        example: ""
+      modified: 
+        type: string
+        example: "2014-04-29T14:18:17-0400"
+      thumbnail:
+        type: object
+        $ref: '#/definitions/Thumbnail'
+      resourceURI:
+        type: string
+        example: http://gateway.marvel.com/v1/public/characters/1011334
+      comics:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      series: 
+        type: object
+        $ref: '#/definitions/GenericObject'
+      stories:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      events:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      urls:
+        type: array
+        items:
+          $ref: '#/definitions/Urls'
+  
+          
+  ResultsComicsByCharacterId:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/definitions/CharactersIdComicsResponse'  
+  CharactersIdComicsResponse:
+    type: "object"
+    properties:
+      id: 
+        type: integer
+        format: int64
+        example: 1011334
+      digitalId: 
+        type: integer
+        format: int64
+        example: 1011334
+      title: 
+        type: string
+        example: "3-D Man"
+      issueNumber: 
+        type: integer
+        format: int64
+        example: 1
+      variantDescription: 
+        type: string
+        example: ""
+      description: 
+        type: string
+        example: ""
+      modified: 
+        type: string
+        example: "2014-04-29T14:18:17-0400"
+      isbn: 
+        type: string
+        example: ""
+      upc: 
+        type: string
+        example: "75960607889900111"
+      diamondCode: 
+        type: string
+        example: ""
+      ean: 
+        type: string
+        example: ""
+      issn:
+        type: string
+        example: ""
+      format: 
+        type: string
+        example: "Comic"
+      pageCount: 
+        type: integer
+        format: int64
+        example: 32
+      textObjects:
+        type: array
+        items:
+          $ref: '#/definitions/TextObjects'
+      resourceURI:
+        type: string
+        example: http://gateway.marvel.com/v1/public/characters/1011334
+      urls:
+        type: array
+        items:
+          $ref: '#/definitions/Urls'
+      series:
+        type: object
+        $ref: '#/definitions/Series'
+      variants:
+        type: array
+        items:
+         type: string
+      collections:
+        type: array
+        items:
+          type: string
+      collectedIssues:
+        type: array
+        items:
+          type: string
+      dates:
+        type: array
+        items:
+          $ref: '#/definitions/Dates'
+      prices:
+        type: array
+        items:
+          $ref: '#/definitions/Prices'
+      images:
+        type: array
+        items:
+          $ref: '#/definitions/Thumbnail'
+      thumbnail:
+        type: array
+        items:
+          $ref: '#/definitions/Thumbnail'
+      creators:
+        type: array
+        items:
+          $ref: '#/definitions/GenericObject'
+      characters:
+        type: array
+        items:
+          $ref: '#/definitions/GenericObject'
+      stories:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      events:
+        type: object
+        $ref: '#/definitions/GenericObject'
+          
+      
+  ResultsEventsByCharacterId:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/definitions/CharactersIdEventsResponse'    
+  CharactersIdEventsResponse:
+    type: "object"
+    properties:
+      id: 
+        type: integer
+        format: int64
+        example: 1011334
+      title: 
+        type: string
+        example: "3-D Man"
+      description: 
+        type: string
+        example: ""
+      resourceURI:
+        type: string
+        example: http://gateway.marvel.com/v1/public/characters/1011334
+      urls:
+        type: array
+        items:
+          $ref: '#/definitions/Urls'
+      modified: 
+        type: string
+        example: "2014-04-29T14:18:17-0400"
+      start: 
+        type: string
+        example: "2008-06-02 00:00:00"
+      end: 
+        type: string
+        example: "2008-06-02 00:00:00"
+      thumbnail:
+        type: array
+        items:
+          $ref: '#/definitions/Thumbnail'
+      creators:
+        type: array
+        items:
+          $ref: '#/definitions/GenericObject'
+      characters:
+        type: array
+        items:
+          $ref: '#/definitions/GenericObject'    
+      stories:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      comics:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      series:
+        type: object
+        $ref: '#/definitions/GenericObject'
+      next:
+        type: object
+        $ref: '#/definitions/Item'
+      previous:
+        type: object
+        $ref: '#/definitions/Item'
+          
+     
+  ResultsSeriesByCharacterId:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/definitions/CharactersIdSeriesResponse'    
+  CharactersIdSeriesResponse:
+      type: "object"
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1011334
+        title: 
+          type: string
+          example: "FREE COMIC BOOK DAY 2013 1 (2013)"
+        desccription: 
+          type: string
+          example: ""
+        resourceURI:
+          type: string
+          example: http://gateway.marvel.com/v1/public/comics/21366
+        urls:
+          type: array
+          items:
+            $ref: '#/definitions/Urls'
+        startYear:
+          type: integer
+          format: int64
+          example: 2013
+        endYear:
+          type: integer
+          format: int64
+          example: 2013
+        rating: 
+          type: string
+          example: "T"
+        type: 
+          type: string
+          example: "one shot"
+        modified: 
+          type: string
+          example: "2014-04-29T14:18:17-0400"
+        thumbnail:
+          type: object
+          $ref: '#/definitions/Thumbnail'
+        creators:
+          type: array
+          items:
+            $ref: '#/definitions/GenericObject'   
+        characters:
+          type: array
+          items:
+            $ref: '#/definitions/GenericObject'
+        stories:
+          type: object
+          $ref: '#/definitions/GenericObject'
+        comics:
+          type: object
+          $ref: '#/definitions/GenericObject'
+        events:
+          type: object
+          $ref: '#/definitions/GenericObject'
+        next:
+          type: object
+          $ref: '#/definitions/Item'
+        previous:
+          type: object
+          $ref: '#/definitions/Item'
+          
+          
+  ResultsStoriesByCharacterId:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/CharactersIdStroiesResponse'    
+  CharactersIdStroiesResponse:
+      type: "object"
+      properties:
+        id: 
+          type: integer
+          format: int64
+          example: 1011334
+        title: 
+          type: string
+          example: "FREE COMIC BOOK DAY 2013 1 (2013)"
+        desccription: 
+          type: string
+          example: ""
+        resourceURI:
+          type: string
+          example: http://gateway.marvel.com/v1/public/comics/21366
+        type: 
+          type: string
+          example: "one shot"
+        modified: 
+          type: string
+          example: "2014-04-29T14:18:17-0400"
+        thumbnail:
+          type: object
+          $ref: '#/definitions/Thumbnail'
+        creators:
+          type: array
+          items:
+            $ref: '#/definitions/GenericObject'
+        characters:
+          type: array
+          items:
+            $ref: '#/definitions/GenericObject'
+        series: 
+          type: object
+          $ref: '#/definitions/GenericObject'
+        comics:
+          type: object
+          $ref: '#/definitions/GenericObject'
+        events:
+          type: object
+          $ref: '#/definitions/GenericObject'
+        originalIssue:
+          type: object
+          $ref: '#/definitions/Item'
+  
+        
+  Thumbnail:    
+    type: "object"
+    properties:
+      path: 
+        type: string
+        example: http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784
+      extension: 
+        type: string
+        example: jpg
+  
+  GenericObject:
+    type: object
+    properties:
+      available:
+        type: integer
+        format: int32
+        example: 12 
+      collectionURI: 
+        type: string
+        example: http://gateway.marvel.com/v1/public/characters/1011334/comics
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Item'
+      returned:
+        type: integer
+        format: int32
+        example: 11  
+  Item:
+    type: object
+    properties:
+      resourceURI:
+        type: string
+        example: http://gateway.marvel.com/v1/public/comics/21366
+      name:
+        type: string
+        example: "Avengers: The Initiative (2007) #14"
+      type:
+        type: string
+        example: cover
+      role:
+        type: string
+        example: colorist
+        
+        
+  
+  TextObjects:
+    type: object
+    properties:
+      type: 
+        type: string
+        example: "issue_solicit_text"
+      language: 
+        type: string
+        example: "en-us"
+      text:
+        type: string
+        example: "It's out action featuring the newest stars to be of Disney XD: Avengers and the Hulk and the Agents of S.M.A.S.H.! Featuring art pulled directly from the animated series, this sneak peek at the two newest animated series from the geniuses at Marvel Animation promises to make this the best yet!"
+        
+  Urls:
+    type: object
+    properties:
+      type: 
+        type: string
+        example: detail
+      url:
+        type: string
+        example: http://marvel.com/comics/issue/47176/free_comic_book_day_2013_1_2013_1?utm_campaign=apiRef&utm_source=cd32d4579ca0a147bda926b73560860f"
+        
+  Series:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "FREE COMIC BOOK DAY 2013 1 (2013)" 
+      resourceURI:
+          type: string
+          example: http://gateway.marvel.com/v1/public/series/17765 
+      collectionURI: 
+        type: string
+        example: http://gateway.marvel.com/v1/public/series/17765
+  
+  Dates:
+    type: object
+    properties:
+      type: 
+        type: string
+        example: "onsaleDate"
+      date: 
+        type: string
+        example: "2013-03-20T00:00:00-0400"
+        
+  Prices:
+    type: object
+    properties:
+      type: 
+        type: string
+        example: "printPrice"
+      price: 
+        type: number
+        format: float
+        example: 0.2  
+      
+      
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
